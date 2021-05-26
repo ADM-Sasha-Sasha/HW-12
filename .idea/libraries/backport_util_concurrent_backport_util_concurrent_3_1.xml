@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="backport-util-concurrent:backport-util-concurrent:3.1" type="repository">
+    <properties maven-id="backport-util-concurrent:backport-util-concurrent:3.1" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/backport-util-concurrent/backport-util-concurrent/3.1/backport-util-concurrent-3.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ideaLibSources/backport-util-concurrent-3.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
