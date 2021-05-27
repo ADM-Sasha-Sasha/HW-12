@@ -16,7 +16,7 @@ public class Water {
         new Creator (molecule).create(getSource(3));
     }
     private static List<String> getSource(int numberOfMolecules) {
-        return Stream.generate(() -> Stream.of(HYDROGEN, HYDROGEN, OXYGEN))
-                .limit(numberOfMolecules).flatMap(s -> s).collect(Collectors.joining());
+        return Stream.generate(() -> Stream.of(HYDROGEN, HYDROGEN, OXYGEN)).limit(numberOfMolecules)
+                .flatMap(s -> s).collect(Collectors.toList());
     }
 }

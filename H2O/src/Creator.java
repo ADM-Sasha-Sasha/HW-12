@@ -1,6 +1,4 @@
 import lombok.SneakyThrows;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
 import java.util.stream.Collectors;
@@ -10,7 +8,7 @@ import java.util.stream.StreamSupport;
 public class Creator {
     private final Map<String, Semaphore> semaphore;
     private final CiclicBarrier barrier;
-    public Creator(HashMap<String, Integer> numberOfAtom) {
+    public Creator(Map<String, Integer> numberOfAtom) {
         semaphore = numberOfAtom.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, v -> new Semaphore(v.getValue())));
         barrier = new CiclicBarrier(numberOfAtom.values().stream().mapToInt(i -> i).sum());
