@@ -1,22 +1,35 @@
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Random;
+import java.util.StringJoiner;
 
 public class Water {
+    private int el;
+    private int elOxygen = 0;
+    private int elHydrogen = 0;
+    private Random random = new Random();
+    private StringJoiner res = new StringJoiner("");
 
-    private static final String HYDROGEN = "H", OXYGEN = "O";
-    public static void main(String[] args) {
-        HashMap<String, Integer> molecule = new HashMap<String, Integer>(2) {
-            {
-                put(OXYGEN, 1);
-                put(HYDROGEN, 2);
-            }
-        };
-        new Creator (molecule).create(getSource(3));
+    public Water (int el) {
+        this.el = el;
     }
-    private static List<String> getSource(int numberOfMolecules) {
-        return Stream.generate(() -> Stream.of(HYDROGEN, HYDROGEN, OXYGEN)).limit(numberOfMolecules)
-                .flatMap(s -> s).collect(Collectors.toList());
+    public StringJoiner result() {
+        String input = "OH";
+        while (elHydrogen < el/3*2 || elOxygen < el/3) {
+            char element = input.charAt(random.nextInt(2));
+            switch (element) {
+                case 'H':
+                    if (elHydrogen < (el/3*2)) {
+                        res.add(Character.toString(el));
+                        elHydrogen++;
+                    }
+                    break;
+                case 'O':
+                    if (elOxygen < (el/3)) {
+                        res.add(Character.toString(el));
+                        elOxygen++;
+                    }
+                    break;
+            }
+        }
+        return res;
     }
 }

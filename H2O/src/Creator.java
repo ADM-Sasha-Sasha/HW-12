@@ -1,29 +1,28 @@
 import lombok.SneakyThrows;
-import java.util.Map;
+
 import java.util.concurrent.Semaphore;
-import java.util.stream.Collectors;
+
 import java.util.concurrent.CyclicBarrier;
-import java.util.stream.StreamSupport;
+
 
 public class Creator {
-    private final Map<String, Semaphore> semaphore;
-    private final CyclicBarrier barrier;
-    public Creator(Map<String, Integer> numberOfAtom) {
-        semaphore = numberOfAtom.entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, v -> new Semaphore(v.getValue())));
-        barrier = new CyclicBarrier(numberOfAtom.values().stream().mapToInt(i -> i).sum());
-    }
 
-    public void create(Iterable<String> atomList) {
-        String finalString = StreamSupport.stream(atomList.spliterator(),false).collect(Collectors.joining());
-        System.out.print("Ввод: " + finalString + "\nВывод: ");
-        atomList.forEach(e -> new Thread(() -> atom(semaphore.get(e), e)).start());
+    private final Semaphore hydrogen = new Semaphore(2);
+    private final Semaphore oxygen = new Semaphore(1);
+    CyclicBarrier barrier = new CyclicBarrier(3, () -> System.out.println());
+
+    @SneakyThrows
+    public void hydrogen(Runnable releaseHydrogen) {
+        hydrogen.acquire();
+        barrier.await();
+        releaseHydrogen.run();
+        hydrogen.release();
     }
     @SneakyThrows
-    private void atom(Semaphore semafore, String sym) {
-        semafore.acquire();
+    public void oxygen(Runnable releaseOxygen) {
+        oxygen.acquire();
         barrier.await();
-        System.out.print(sym);
-        semafore.release();
+        releaseOxygen.run();
+        oxygen.release();
     }
 }
